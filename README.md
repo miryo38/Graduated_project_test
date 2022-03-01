@@ -49,3 +49,5 @@ const getUser = async() => {
                   <Text style={styles.titleText}>{userData ? userData.name : ''}님의 미니홈피</Text>    
 
                  이미지 = source={{uri: userData ? userData.userImg || 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg' : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'}}/>
+
+ 잘 모르겠으면 ProfileScreen, EditProfile 참고                
