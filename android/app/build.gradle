@@ -139,6 +139,7 @@ android {
         versionCode 1
         versionName "1.0"
         resValue "string", "build_config_package", "com.login0101"
+        vectorDrawables.useSupportLibrary = true
     }
     splits {
         abi {

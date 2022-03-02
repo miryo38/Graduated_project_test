@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
-import { COLORS } from '../../components/constants/theme';
-import { signOut } from '../../utils/auth';
+
 import {
   View,
   Text,
@@ -75,21 +74,12 @@ const onMiniroompress = () => {
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={styles.title}>
         <Text style={styles.titleText}>{userData ? userData.name : ''}님의 미니홈피</Text>
-        <Text
-          style={{
-            
-            fontSize: 20,
-            padding: 10,
-            color: COLORS.error,
-          }}
-          onPress={() => logout()}>
-          Logout
-        </Text>
+       
         
       </View>
       
       <TouchableOpacity onPress={() => onMusicPressed()}>
-      <View style={styles.title}>
+      <View style={styles.music}>
         <Text>music</Text>
       </View>
       </TouchableOpacity>
@@ -103,25 +93,32 @@ const onMiniroompress = () => {
             <TouchableOpacity onPress={() => onprofilePressed()}>
               <Image style={styles.userImg} source={{uri: userData ? userData.userImg || 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg' : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'}}/>
             </TouchableOpacity>
-          <Text style={styles.userName}>{name}</Text>
-          {/* <Text>{route.params ? route.params.userId : user.uid}</Text> */}
-          <Text style={styles.aboutUser}>
-          {email}
-          </Text>
+          
+          
           </View>
           
           <View style={styles.rightcontainer}>
-            <Text>이름 :</Text>
-            <Text>나이 :</Text>
-            <Text>성별 :</Text>
-            <View style={{width:'100%',borderWidth:1,position:'absolute',bottom:0,flexDirection: 'row'}}>
-              <Text style={{color:'red'}}>today 1512   </Text>
-
-              <Text>오늘의 기분 : 좋아요</Text>
+            <View style={styles.action}>
+            <Text>이름                     {userData ? userData.name : ''}</Text>
             </View>
-          </View>
+            
+            <View style={styles.action}>
+            <Text>나이                          {userData ? userData.age : ''}</Text>
+            </View>
+            <View style={styles.action}>
+            <Text>생일                  {userData ? userData.birthday : ''}</Text>
+            </View>
+            <View style={styles.action}>
+            <Text>Today                        0</Text>
+            </View>
+            <View style={styles.action}>
+            <Text>오늘의 기분             행복</Text>
+            </View>
+            
+            </View>
+          </View> 
         
-        </View>
+       
         
 
         <View style={styles.userInfoWrapper}>
@@ -177,33 +174,42 @@ const styles = StyleSheet.create({
     flex:0.7,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'red',
+   
   },
+  userinfotext: {
+    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: "center",
+  },
+
   rightcontainer: {
-    flex:1,
-    borderWidth: 1,
-    borderColor: 'red',
+    flex:0.8,
+    
   },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
+   
+  },
+  music:{
     borderWidth: 1,
-    borderColor: 'red',
+    borderColor: 'green',
+    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: "center",
   },
   title:{
     justifyContent: "center",
     flexDirection: 'row',
     alignItems: "center",
     
-    borderWidth: 1,
-    borderColor: 'red',
+   
   },
   titleText:{
     fontSize: 20,
-    borderWidth: 1,
-    borderColor: 'red',
+   
+   
   },
   userImg: {
     height: 125,
@@ -212,22 +218,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     
   },
-  userName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 10,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: 'red',
-  },
-  aboutUser: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#666',
-    textAlign: 'center',
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: 'red',
+  action: {
+    flexDirection: 'row',
+    marginTop: 2,
+    marginBottom: 1,
+    
+    paddingBottom: 5,
   },
   userBtnWrapper: {
     flexDirection: 'row',

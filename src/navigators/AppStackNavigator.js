@@ -23,6 +23,7 @@ const AppNavigator = () => (
       name="Home"
       component={ProfileStackScreen}
       options={{
+        unmountOnBlur: true,
         tabBarIcon: ({size}) => (
           <Image
             source={require('../../assets/images/splash.png')}

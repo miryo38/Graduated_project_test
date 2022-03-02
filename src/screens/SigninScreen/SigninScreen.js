@@ -1,5 +1,5 @@
 import React, {useState,useContext} from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, Text, SafeAreaView,StyleSheet,StatusBar} from 'react-native';
 import FormInput_2 from '../../components/shared/FormInput_2';
 import { COLORS } from '../../components/constants/theme';
 import SocialButton from '../../components/shared/SocialButton';
@@ -17,6 +17,8 @@ const SigninScreen = ({navigation}) => {
 
 
   return (
+    <View style={styles.container}>
+      
     <SafeAreaView
       style={{
         backgroundColor: COLORS.white,
@@ -53,7 +55,9 @@ const SigninScreen = ({navigation}) => {
         placeholderText="Password"
         iconType="lock"
         secureTextEntry={true}
+        
       />
+      
    
       {/* 가입 button */}
       <FormButton_2
@@ -90,7 +94,19 @@ const SigninScreen = ({navigation}) => {
         </Text>
       </View>
     </SafeAreaView>
+    </View>
   );
 };
 
 export default SigninScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, 
+    backgroundColor: '#FF6347'
+  },
+  errorMsg: {
+    color: '#FF0000',
+    fontSize: 14,
+},
+});

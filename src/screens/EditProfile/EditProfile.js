@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
-
+import {CommonActions} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
@@ -17,19 +17,21 @@ import FormButton_2 from '../../components/shared/FormButton_2';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import ImagePicker from 'react-native-image-crop-picker';
-import {launchImageLibrary} from 'react-native-image-picker';
-
 import { AuthContext } from '../../utils/AuthProvider';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
-
+import {useNavigation} from '@react-navigation/native';
 const EditProfile = () => {
   const {user, logout} = useContext(AuthContext);
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
   const [userData, setUserData] = useState(null);
-
+  const navigation = useNavigation();
+  
+  const onprofile = () => {
+    navigation.navigate('Home');
+  };
   const getUser = async() => {
     const currentUser = await firestore()
     .collection('users')
@@ -62,10 +64,10 @@ const EditProfile = () => {
       userImg: imgUrl,
     })
     .then(() => {
-      console.log('User Updated!');
+      console.log('업데이트');
       Alert.alert(
-        'Profile Updated!',
-        'Your profile has been updated successfully.'
+        '프로필이 업데이트 됬습니다!',
+        '당신의 프로필이 성공적으로 바뀌었습니다!.'
       );
     })
   }
@@ -133,7 +135,7 @@ const EditProfile = () => {
       compressImageQuality: 0.7,
     }).then((image) => {
       console.log(image);
-      const imageUri = Platform.OS === 'andoid' ? image.sourceURL : image.path;
+      const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
       setImage(imageUri);
       this.bs.current.snapTo(1);
     });
@@ -147,45 +149,34 @@ const EditProfile = () => {
       compressImageQuality: 0.7,
     }).then((image) => {
       console.log(image);
-      const imageUri = Platform.OS === 'android' ? image.sourceURL : image.path;
+      const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
       setImage(imageUri);
       this.bs.current.snapTo(1);
     });
   };
 
-  const selectImage = () => {
-    launchImageLibrary(
-      {
-        mediaType: 'photo',
-      }).then((image) => {
-        console.log(image);
-        const imageUri = Platform.OS === 'android' ? image.sourceURL : image.path;
-        setImage(imageUri);
-        this.bs.current.snapTo(1);
-      });
-  };
-  
+
 
   renderInner = () => (
     <View style={styles.panel}>
       <View style={{alignItems: 'center'}}>
-        <Text style={styles.panelTitle}>Upload Photo</Text>
-        <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
+        <Text style={styles.panelTitle}>프로필 사진 바꾸기</Text>
+        <Text style={styles.panelSubtitle}>당신의 프로필 사진을 선택하세요</Text>
       </View>
       <TouchableOpacity
         style={styles.panelButton}
         onPress={takePhotoFromCamera}>
-        <Text style={styles.panelButtonTitle}>Take Photo</Text>
+        <Text style={styles.panelButtonTitle}>사진을 찍어서 업로드</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.panelButton}
-        onPress={selectImage}>
-        <Text style={styles.panelButtonTitle}>Choose From Library</Text>
+        onPress={choosePhotoFromLibrary}>
+        <Text style={styles.panelButtonTitle}>갤러리에서 선택</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.panelButton}
         onPress={() => this.bs.current.snapTo(1)}>
-        <Text style={styles.panelButtonTitle}>Cancel</Text>
+        <Text style={styles.panelButtonTitle}>취소</Text>
       </TouchableOpacity>
     </View>
   );
@@ -216,7 +207,9 @@ const EditProfile = () => {
         style={{
           margin: 20,
           opacity: Animated.add(0.1, Animated.multiply(this.fall, 1.0)),
-        }}>
+        }}> 
+          
+          
         <View style={{alignItems: 'center'}}>
           <TouchableOpacity onPress={() => this.bs.current.snapTo(0)}>
             <View
@@ -264,7 +257,7 @@ const EditProfile = () => {
           <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
             {userData ? userData.name : ''}
           </Text>
-          {/* <Text>{user.uid}</Text> */}
+         
         </View>
 
         <View style={styles.action}>
@@ -299,7 +292,7 @@ const EditProfile = () => {
             value={userData ? userData.about : ''}
             onChangeText={(txt) => setUserData({...userData, about: txt})}
             autoCorrect={true}
-            style={[styles.textInput, {height: 40}]}
+            style={[styles.textInput, {height: 45}]}
           />
           </View>
         <View style={styles.action}>
@@ -312,7 +305,7 @@ const EditProfile = () => {
             value={userData ? userData.birthday : ''}
             onChangeText={(txt) => setUserData({...userData, birthday: txt})}
             autoCorrect={true}
-            style={[styles.textInput, {height: 40}]}
+            style={[styles.textInput, {height: 45}]}
           />
         </View>
         <View style={styles.action}>
@@ -329,7 +322,7 @@ const EditProfile = () => {
         </View>
 
      
-        <FormButton_2 buttonTitle="Update" onPress={handleUpdate} />
+        <FormButton_2 buttonTitle="업데이트" onPress={handleUpdate} />
       </Animated.View>
     </View>
   );

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect,useContext} from 'react';
 import {ScrollView, View, TouchableOpacity, StyleSheet, Switch, Text,Alert,Pressable}from  'react-native';
 import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
@@ -7,7 +7,9 @@ import userSlice from '../../../slices/user';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/reducer';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import { AuthContext } from '../../utils/AuthProvider';
 const SettingScreen = () => {
+    const {user, logout} = useContext(AuthContext);
     const accessToken = useSelector((state: RootState) => state.user.accessToken);
   const name = useSelector((state: RootState) => state.user.name);
   const dispatch = useAppDispatch();
@@ -107,9 +109,9 @@ const SettingScreen = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.row}>
-                    <TouchableOpacity style={styles.section} onPress={() => onLogout()}>
+                    <TouchableOpacity style={styles.section} onPress={() => logout()}>
                         <Text >
-                            Logout test
+                            Logout
                         </Text>
                     </TouchableOpacity>
                 </View>
