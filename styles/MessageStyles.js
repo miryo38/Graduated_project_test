@@ -1,5 +1,8 @@
 import styled from 'styled-components';
+<<<<<<< HEAD
 
+=======
+>>>>>>> ca0d5b6a4b67b45bf1ba303281a1258f1943687d
 export const Container = styled.View`
   flex: 1;
   padding-left: 20px;
